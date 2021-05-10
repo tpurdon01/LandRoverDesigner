@@ -2,6 +2,6 @@ function foo(bar: string) {
     return "Hello, " + bar;
 }
 
-let baz: string = "ABC";
+let bazz: string = "ABC";
 
-console.log(foo(baz));
+console.log(foo(bazz));
