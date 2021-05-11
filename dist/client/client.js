@@ -3,14 +3,20 @@ import { OrbitControls } from '/jsm/controls/OrbitControls';
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
+// sets size of the window (currently full size of window)
 renderer.setSize(window.innerWidth, window.innerHeight);
+///////////////////////////////////////////////////////////////////////////
+// Could append this to a canvas element in the html to display this somewhere specific
+// const canvas : HTMLCanvasElement = <HTMLCanvasElement> document.getElementById('<id-canvas-tag>')
+// const renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer({canvas: canvas})
+///////////////////////////////////////////////////////////////////////////
 document.body.appendChild(renderer.domElement);
 const controls = new OrbitControls(camera, renderer.domElement);
 const geometry = new THREE.BoxGeometry();
 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
 const cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
-camera.position.z = 2;
+camera.position.z = 3;
 window.addEventListener('resize', onWindowResize, false);
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
