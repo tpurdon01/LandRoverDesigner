@@ -1,5 +1,7 @@
 import * as THREE from '/build/three.module.js'
 import { OrbitControls } from '/jsm/controls/OrbitControls'
+import { GUI } from '/jsm/libs/dat.gui.module'
+import Stats from '/jsm/libs/stats.module'
 
 const scene: THREE.Scene = new THREE.Scene()
 
@@ -17,6 +19,7 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
 const controls = new OrbitControls(camera, renderer.domElement)
+controls.addEventListener('change', render);
 
 const geometry: THREE.BoxGeometry = new THREE.BoxGeometry()
 const material: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true })
@@ -34,19 +37,38 @@ function onWindowResize() {
   render()
 }
 
+const stats = Stats();
+document.body.appendChild(stats.dom);
+
+const gui = new GUI();
+const cubeFolder = gui.addFolder("Cubey Wubey")
+cubeFolder.add(cube.rotation, "x", 0, Math.PI * 2);
+cubeFolder.add(cube.rotation, "y", 0, Math.PI * 2);
+cubeFolder.add(cube.rotation, "z", 0, Math.PI * 2);
+cubeFolder.open();
+
+const cameraFolder = gui.addFolder("Camera Wamera");
+cameraFolder.add(camera.position, "z", 0, 10);
+cameraFolder.open();
+
+// sometimes not needed if no moving parts - saves CPU power not using
 var animate = function () {
   requestAnimationFrame(animate)
 
-  cube.rotation.x += 0.01;
-  cube.rotation.y += 0.01;
+  // cube.rotation.x += 0.01;
+  // cube.rotation.y += 0.01;
 
   controls.update()
 
   render()
+
+  stats.update();
 };
 
 function render() {
-  renderer.render(scene, camera)
+  //stats.begin();
+  renderer.render(scene, camera);
+  //stats.end();
 }
 
 animate();
